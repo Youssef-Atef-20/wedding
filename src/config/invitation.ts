@@ -104,7 +104,7 @@ export const weddingConfig: WeddingConfig = {
     address: 'شارع العروبة، مصر الجديدة',
     city: 'القاهرة',
     country: 'مصر',
-    googleMapsUrl: 'https://maps.app.goo.gl/9uG5eQ5n4qY8t7vE7',
+    googleMapsUrl: 'https://maps.app.goo.gl/ZmZuEhL1fhSQf7qKA',
     valetAvailable: true,
   },
   messages: {
