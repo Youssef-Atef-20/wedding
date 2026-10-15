@@ -88,7 +88,7 @@ export const FloatingNav: FC = () => {
         bottom: 'calc(0.75rem + env(safe-area-inset-bottom, 0px))',
       }}
     >
-      <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-full bg-[#182018]/92 backdrop-blur-xl border border-[#B79A66]/40 shadow-2xl max-w-[calc(100vw-1.5rem)]">
+      <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-full bg-[#FFFDF8]/92 backdrop-blur-xl border border-[#C6AA78]/35 shadow-xl max-w-[calc(100vw-1.5rem)]">
         {navItems.map((item) => {
           const isActive = activeSection === item.id;
           return (
@@ -100,11 +100,11 @@ export const FloatingNav: FC = () => {
               title={item.label}
               className={`relative flex items-center justify-center gap-1.5 py-1.5 px-2.5 sm:px-3 rounded-full text-xs font-sans-ar transition-all duration-200 cursor-pointer select-none min-h-[38px] ${
                 isActive
-                  ? 'bg-[#B79A66] text-[#1E251E] font-semibold shadow-md'
-                  : 'text-[#E8D8BD]/85 hover:text-[#F8F4EC] hover:bg-[#2A3428]/50'
+                  ? 'bg-[#C6AA78] text-[#48423C] font-semibold shadow-sm'
+                  : 'text-[#7A7269] hover:text-[#48423C] hover:bg-[#F7F0E5]/60'
               }`}
             >
-              <span className={isActive ? 'text-[#1E251E]' : 'text-[#B79A66]'}>{item.icon}</span>
+              <span className={isActive ? 'text-[#48423C]' : 'text-[#89927A]'}>{item.icon}</span>
               {/* Show label on tablet/desktop, and on active item on mobile if space allows */}
               <span className="hidden sm:inline whitespace-nowrap">{item.label}</span>
               {isActive && <span className="inline sm:hidden text-[10px] whitespace-nowrap">{item.label}</span>}

@@ -28,7 +28,7 @@ export function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#1E251E] text-[#F8F4EC] selection:bg-[#B79A66] selection:text-[#1E251E] overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#FFFDF8] text-[#48423C] selection:bg-[#F2DFDE] selection:text-[#48423C] overflow-x-hidden">
       {/* Background Film Grain Noise Texture (Zero repaint cost, non-scrolling) */}
       <div className="noise-overlay" aria-hidden="true" />
 
@@ -47,7 +47,7 @@ export function App() {
         <QuranicVerse />
 
         {/* Scene 4: Cinematic Atmosphere & Architecture */}
-        <CinematicGallery />
+        {/* <CinematicGallery /> */}
 
         {/* Scene 5: The Wedding Date, Countdown & Add to Calendar */}
         <WeddingDate />

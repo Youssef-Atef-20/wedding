@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { weddingConfig } from '../config/invitation';
 import { Sparkles, Camera } from 'lucide-react';
+import { BotanicalDivider, FloralCorner } from './FloralDecorations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,7 +25,6 @@ export const CinematicGallery: FC = () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
-      // Natural entrance animation without delaying native scrolling
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -34,16 +34,16 @@ export const CinematicGallery: FC = () => {
       });
 
       tl.from(heroCardRef.current, {
-        scale: 0.96,
-        opacity: 0.5,
-        y: 35,
+        scale: 0.97,
+        opacity: 0,
+        y: 25,
         duration: 0.7,
         ease: 'power2.out',
       })
         .from(
           quoteRef.current,
           {
-            y: 20,
+            y: 15,
             opacity: 0,
             duration: 0.6,
             ease: 'power2.out',
@@ -53,7 +53,7 @@ export const CinematicGallery: FC = () => {
         .from(
           '.gallery-sub-item',
           {
-            y: 30,
+            y: 25,
             opacity: 0,
             stagger: 0.15,
             duration: 0.6,
@@ -69,63 +69,64 @@ export const CinematicGallery: FC = () => {
     <section
       ref={containerRef}
       id="cinematic-gallery"
-      aria-label="معرض الصور والتفاصيل المعمارية"
-      className="relative min-h-[90dvh] w-full py-16 sm:py-24 md:py-32 px-4 md:px-8 flex flex-col items-center justify-center bg-[#121712] overflow-hidden"
+      aria-label="معرض الصور والأجواء الزهرية"
+      className="relative min-h-[90dvh] w-full py-14 sm:py-20 md:py-28 px-3 sm:px-6 md:px-8 flex flex-col items-center justify-center bg-[#FFFDF8] overflow-hidden"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 right-10 w-80 h-80 bg-[#B79A66]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-80 h-80 bg-[#45483B]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Ambient Illumination */}
+      <div className="absolute top-1/3 right-10 w-80 h-80 bg-[#F7F0E5]/60 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-[#F2DFDE]/40 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header Eyebrow */}
-      <div className="relative z-10 text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B79A66]/10 border border-[#B79A66]/25 text-[#D8BD8A] text-xs font-sans-ar mb-2.5 sm:mb-3">
-          <Camera className="w-3.5 h-3.5 text-[#B79A66]" />
+      <div className="relative z-10 text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F0E5] border border-[#C6AA78]/40 text-[#48423C] text-xs font-sans-ar mb-2.5 shadow-sm">
+          <Camera className="w-3.5 h-3.5 text-[#C6AA78]" />
           <span>أجواء الحفل والذاكرة</span>
         </div>
-        <h2 className="font-serif-ar text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#F8F4EC] font-normal tracking-wide">
+        <h2 className="font-serif-ar text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#48423C] font-normal tracking-wide">
           لحظات كُتبت لتبقى خالدة
         </h2>
-        <p className="font-serif-en italic text-xs sm:text-sm md:text-base text-[#B79A66] mt-1.5 tracking-widest">
-          A Glimpse into the Royal Atmosphere
+        <BotanicalDivider className="w-32 sm:w-44 mx-auto my-2" />
+        <p className="font-serif-en italic text-xs sm:text-sm md:text-base text-[#9C8150] tracking-widest">
+          A Glimpse into the Floral Royal Splendor
         </p>
       </div>
 
-      {/* Main Large Editorial Architecture Card */}
+      {/* Main Large Editorial Architecture & Floral Card */}
       <div
         ref={heroCardRef}
-        className="bezel-card-outer relative z-10 w-full max-w-5xl mx-auto overflow-hidden shadow-2xl mb-8 sm:mb-12"
+        className="stationery-card-outer relative z-10 w-full max-w-5xl mx-auto overflow-hidden shadow-xl mb-8 sm:mb-12"
       >
-        <div className="bezel-card-inner relative w-full h-[280px] sm:h-[400px] md:h-[500px] overflow-hidden flex items-end p-5 sm:p-8 md:p-12">
+        <div className="stationery-card-inner relative w-full h-[280px] sm:h-[400px] md:h-[480px] overflow-hidden flex items-end p-5 sm:p-8 md:p-12 bg-[#FAF6F0]">
           {!failedImages['hero-gallery'] ? (
             <img
               src={weddingConfig.photos.hero}
-              alt="العمارة التاريخية لقصر البارون"
-              className="absolute inset-0 w-full h-full object-cover object-center scale-102 transition-transform duration-700 ease-out"
+              alt="قوس الزهور البيضاء وأجواء قصر البارون"
+              className="absolute inset-0 w-full h-full object-cover object-center scale-102 transition-transform duration-700 ease-out hover:scale-105"
               loading="lazy"
               onError={() => handleImageError('hero-gallery')}
             />
           ) : (
-            <div className="absolute inset-0 w-full h-full bg-[#1E251E] flex flex-col items-center justify-center p-6 text-center">
-              <Sparkles className="w-10 h-10 text-[#B79A66] mb-2" />
-              <p className="font-serif-ar text-2xl text-[#E8D8BD]">عمر &amp; ياسمين</p>
-              <p className="font-serif-en text-xs text-[#B79A66] tracking-widest uppercase mt-1">
+            <div className="absolute inset-0 w-full h-full bg-[#F7F0E5] flex flex-col items-center justify-center p-6 text-center">
+              <Sparkles className="w-10 h-10 text-[#C6AA78] mb-2" />
+              <p className="font-serif-ar text-2xl text-[#48423C]">عمر &amp; ياسمين</p>
+              <p className="font-serif-en text-xs text-[#9C8150] tracking-widest uppercase mt-1">
                 Eternity Begins Here
               </p>
             </div>
           )}
 
-          {/* Cinematic Gradient Scrim for Contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#121712] via-[#121712]/45 to-transparent pointer-events-none" />
+          {/* Elegant Scrim for Typographic Contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#48423C]/80 via-[#48423C]/30 to-transparent pointer-events-none" />
 
           {/* Editorial Caption on Image */}
-          <div ref={quoteRef} className="relative z-10 max-w-xl text-right">
-            <span className="font-serif-en text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[#D8BD8A] block mb-1.5 sm:mb-2">
-              HISTORIC SPLENDOR
+          <div ref={quoteRef} className="relative z-10 max-w-xl text-right text-white">
+            <span className="font-serif-en text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[#DFC89E] block mb-1.5 font-medium">
+              ROYAL BOTANICAL ATMOSPHERE
             </span>
-            <p className="font-serif-ar text-xl sm:text-2xl md:text-3xl text-[#F8F4EC] leading-snug font-normal drop-shadow">
-              "وفي رحاب الأصالة والمودة، تكتمل فرحتنا بوجودكم معنا"
+            <p className="font-serif-ar text-xl sm:text-2xl md:text-3xl leading-snug font-normal drop-shadow">
+              "وفي رحاب الأصالة والزهور البيضاء، تكتمل فرحتنا بوجودكم معنا"
             </p>
-            <div className="w-10 sm:w-12 h-[2px] bg-[#B79A66] mt-2.5 sm:mt-3" />
+            <div className="w-12 h-[2px] bg-[#C6AA78] mt-2.5" />
           </div>
         </div>
       </div>
@@ -138,10 +139,12 @@ export const CinematicGallery: FC = () => {
         {weddingConfig.photos.gallery.slice(0, 3).map((item) => (
           <div
             key={item.id}
-            className="gallery-sub-item bezel-card-outer group hover:scale-[1.01] transition-transform duration-300 ease-out"
+            className="gallery-sub-item stationery-card-outer group hover:scale-[1.02] transition-transform duration-300 ease-out shadow-md"
           >
-            <div className="bezel-card-inner p-3 sm:p-4 flex flex-col">
-              <div className="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden mb-3 sm:mb-4 bg-[#1E251E]">
+            <div className="stationery-card-inner p-3.5 sm:p-4 flex flex-col bg-[#FCFAF6] relative">
+              <FloralCorner position="top-right" className="absolute top-2 right-2 w-6 h-6 opacity-40" />
+
+              <div className="relative w-full h-52 sm:h-64 rounded-xl overflow-hidden mb-3 bg-[#F7F0E5] border border-[#C6AA78]/25">
                 {!failedImages[item.id] ? (
                   <img
                     src={item.url}
@@ -151,18 +154,18 @@ export const CinematicGallery: FC = () => {
                     onError={() => handleImageError(item.id)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-[#252E23] text-[#B79A66] text-center p-4">
+                  <div className="w-full h-full flex items-center justify-center bg-[#F7F0E5] text-[#48423C] text-center p-4">
                     <span className="font-serif-ar text-base sm:text-lg">{item.caption}</span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141914]/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#48423C]/25 via-transparent to-transparent pointer-events-none" />
               </div>
 
-              <div className="text-right px-1.5 sm:px-2 pb-1.5 sm:pb-2">
-                <p className="font-serif-ar text-base sm:text-lg text-[#F8F4EC] font-medium">
+              <div className="text-right px-1.5 pb-1">
+                <p className="font-serif-ar text-base sm:text-lg text-[#48423C] font-semibold">
                   {item.caption}
                 </p>
-                <p className="font-sans-ar text-[11px] sm:text-xs text-[#B79A66] mt-0.5 sm:mt-1">
+                <p className="font-sans-ar text-[11px] sm:text-xs text-[#89927A] mt-0.5">
                   {item.alt}
                 </p>
               </div>

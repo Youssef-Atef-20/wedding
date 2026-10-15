@@ -121,37 +121,37 @@ export const weddingConfig: WeddingConfig = {
     closingSubtext: 'دامت دياركم عامرة بالأفراح والمسرات والبهجة الدائمة.',
   },
   photos: {
-    // Strictly verified modest, elegant Islamic imagery: Palace architecture, luxury floral arrangements, wedding bands
-    hero: 'https://images.unsplash.com/photo-1545232979-fbf68fe9b10d?auto=format&fit=crop&w=1920&q=85', // Palace architecture & evening lights
-    groomMotif: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=85', // Elegant formal groom tuxedo detail
-    brideMotif: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85', // Pure white bridal floral bouquet & pearls
+    // Strictly verified modest, elegant Islamic floral imagery: White roses, botanical arches, wedding rings on silk, palace architecture
+    hero: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=85', // Majestic botanical white rose arch
+    groomMotif: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85', // White rose & eucalyptus formal boutonniere
+    brideMotif: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85', // Delicate white roses bouquet with pearls
     gallery: [
       {
         id: 'photo-1',
         url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=85',
-        alt: 'تفاصيل أنيقة لخاتمي الزفاف الذهبيين',
+        alt: 'خاتما الزفاف الذهبيان وسط بتلات الورد الأبيض',
         caption: 'رمز المودة والعهد الأبدي',
         orientation: 'landscape',
       },
       {
         id: 'photo-2',
-        url: 'https://images.unsplash.com/photo-1545232979-fbf68fe9b10d?auto=format&fit=crop&w=1400&q=85',
-        alt: 'العمارة الملكية والأضواء الاحتفالية',
-        caption: 'أجواء أسطورية تحت سماء القاهرة',
+        url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=85',
+        alt: 'قوس الزهور الطبيعية البيضاء وأوراق الأوكالبتوس',
+        caption: 'أكاليل الورد تحتفي بفرحتنا',
         orientation: 'landscape',
       },
       {
         id: 'photo-3',
-        url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1400&q=85',
-        alt: 'باقة زهور العروس من الورد الطبيعي الأبيض',
-        caption: 'عبق الزهور يرافق فرحتنا',
+        url: 'https://images.unsplash.com/photo-1545232979-fbf68fe9b10d?auto=format&fit=crop&w=1400&q=85',
+        alt: 'العمارة الملكية التاريخية لقصر البارون',
+        caption: 'أجواء أسطورية في قلب القاهرة',
         orientation: 'landscape',
       },
       {
         id: 'photo-4',
-        url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=85',
-        alt: 'حدائق القصر الملكية المضاءة بالشموع',
-        caption: 'ليلة من ألف ليلة وليلة',
+        url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1400&q=85',
+        alt: 'مائدة الاحتفال المزينة بالورود والشموع الدافئة',
+        caption: 'ليلة مباركة تجمع القلوب بالمحبة',
         orientation: 'portrait',
       },
     ],

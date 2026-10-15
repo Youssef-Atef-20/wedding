@@ -3,7 +3,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { weddingConfig } from '../config/invitation';
-import { ChevronDown, MailOpen } from 'lucide-react';
+import { ChevronDown, Sparkles } from 'lucide-react';
+import { CouronneFlorale, BotanicalDivider, FloralCorner } from './FloralDecorations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,10 +14,10 @@ interface InvitationCoverProps {
 
 export const InvitationCover: FC<InvitationCoverProps> = ({ onOpenComplete }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const envelopeRef = useRef<HTMLDivElement>(null);
-  const flapRef = useRef<HTMLDivElement>(null);
-  const waxSealRef = useRef<HTMLDivElement>(null);
-  const letterRef = useRef<HTMLDivElement>(null);
+  const sealRef = useRef<HTMLButtonElement>(null);
+  const gateLeftRef = useRef<HTMLDivElement>(null);
+  const gateRightRef = useRef<HTMLDivElement>(null);
+  const innerCardRef = useRef<HTMLDivElement>(null);
   const promptRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,62 +29,31 @@ export const InvitationCover: FC<InvitationCoverProps> = ({ onOpenComplete }) =>
 
       const mm = gsap.matchMedia();
 
-      // Desktop: Direct 1:1 scrub tracking without lag and gentle short pin
+      // Desktop: Direct 1:1 scrub tracking without input latency
       mm.add('(min-width: 768px)', () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
-            end: '+=40%',
+            end: '+=45%',
             pin: true,
             scrub: true,
             anticipatePin: 1,
             onUpdate: (self) => {
-              if (self.progress > 0.35 && !isOpen) {
+              if (self.progress > 0.3 && !isOpen) {
                 setIsOpen(true);
-              } else if (self.progress <= 0.35 && isOpen) {
+              } else if (self.progress <= 0.3 && isOpen) {
                 setIsOpen(false);
               }
             },
           },
         });
 
-        tl.to(promptRef.current, {
-          opacity: 0,
-          y: -15,
-          duration: 0.2,
-          ease: 'none',
-        })
-          .to(
-            waxSealRef.current,
-            {
-              scale: 1.12,
-              duration: 0.3,
-              ease: 'none',
-            },
-            0
-          )
-          .to(
-            flapRef.current,
-            {
-              rotateX: 180,
-              zIndex: 1,
-              duration: 0.6,
-              ease: 'none',
-            },
-            0.1
-          )
-          .to(
-            letterRef.current,
-            {
-              y: -100,
-              scale: 1.03,
-              zIndex: 10,
-              duration: 0.7,
-              ease: 'none',
-            },
-            0.2
-          );
+        tl.to(promptRef.current, { opacity: 0, y: -15, duration: 0.2, ease: 'none' })
+          .to(sealRef.current, { scale: 0.9, opacity: 0, duration: 0.3, ease: 'none' }, 0)
+          .to(gateLeftRef.current, { xPercent: -105, opacity: 0.3, duration: 0.7, ease: 'none' }, 0.05)
+          .to(gateRightRef.current, { xPercent: 105, opacity: 0.3, duration: 0.7, ease: 'none' }, 0.05)
+          .to(innerCardRef.current, { scale: 1.02, opacity: 1, duration: 0.7, ease: 'none' }, 0.1);
       });
 
       // Mobile: 100% natural touch scrolling (no pinning)
@@ -95,9 +65,9 @@ export const InvitationCover: FC<InvitationCoverProps> = ({ onOpenComplete }) =>
             end: 'center top',
             scrub: true,
             onUpdate: (self) => {
-              if (self.progress > 0.25 && !isOpen) {
+              if (self.progress > 0.2 && !isOpen) {
                 setIsOpen(true);
-              } else if (self.progress <= 0.25 && isOpen) {
+              } else if (self.progress <= 0.2 && isOpen) {
                 setIsOpen(false);
               }
             },
@@ -105,9 +75,10 @@ export const InvitationCover: FC<InvitationCoverProps> = ({ onOpenComplete }) =>
         });
 
         tl.to(promptRef.current, { opacity: 0, y: -10, duration: 0.2 })
-          .to(waxSealRef.current, { scale: 1.1, duration: 0.2 }, 0)
-          .to(flapRef.current, { rotateX: 180, zIndex: 1, duration: 0.5 }, 0.05)
-          .to(letterRef.current, { y: -60, scale: 1.02, zIndex: 10, duration: 0.6 }, 0.1);
+          .to(sealRef.current, { scale: 0.85, opacity: 0, duration: 0.25 }, 0)
+          .to(gateLeftRef.current, { xPercent: -100, opacity: 0.2, duration: 0.5 }, 0.05)
+          .to(gateRightRef.current, { xPercent: 100, opacity: 0.2, duration: 0.5 }, 0.05)
+          .to(innerCardRef.current, { scale: 1.01, opacity: 1, duration: 0.5 }, 0.1);
       });
     },
     { scope: containerRef }
@@ -130,140 +101,162 @@ export const InvitationCover: FC<InvitationCoverProps> = ({ onOpenComplete }) =>
       },
     });
 
-    tl.to(promptRef.current, { opacity: 0, duration: 0.2 })
-      .to(waxSealRef.current, { scale: 1.12, duration: 0.25 })
-      .to(flapRef.current, { rotateX: 180, zIndex: 1, duration: 0.45, ease: 'power2.inOut' })
-      .to(letterRef.current, { y: -100, scale: 1.03, zIndex: 10, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+    tl.to(promptRef.current, { opacity: 0, y: -10, duration: 0.2 })
+      .to(sealRef.current, { scale: 1.15, duration: 0.2, ease: 'power2.out' })
+      .to(sealRef.current, { scale: 0.8, opacity: 0, duration: 0.25, ease: 'power2.in' })
+      .to(gateLeftRef.current, { xPercent: -105, opacity: 0.1, duration: 0.6, ease: 'power3.inOut' }, '-=0.15')
+      .to(gateRightRef.current, { xPercent: 105, opacity: 0.1, duration: 0.6, ease: 'power3.inOut' }, '<')
+      .to(innerCardRef.current, { scale: 1.02, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
   };
 
   return (
     <section
       ref={containerRef}
       id="invitation-cover"
-      aria-label="غلاف دعوة الزفاف"
-      className="relative min-h-[92dvh] w-full flex flex-col items-center justify-center px-3 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 overflow-hidden bg-radial from-[#283226] via-[#1E251E] to-[#141914]"
+      aria-label="غلاف دعوة الزفاف الملكية"
+      className="relative min-h-[96dvh] w-full flex flex-col items-center justify-center px-3 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 overflow-hidden bg-[#FFFDF8]"
     >
-      {/* Decorative background framing */}
-      <div className="absolute inset-2.5 sm:inset-5 md:inset-10 border border-[#B79A66]/20 rounded-2xl sm:rounded-3xl pointer-events-none" />
-      <div className="absolute inset-4 sm:inset-7 md:inset-12 border border-[#B79A66]/10 rounded-xl sm:rounded-2xl pointer-events-none hidden sm:block" />
+      {/* Background Soft Warm Atmosphere */}
+      <div className="absolute inset-0 bg-radial from-[#F7F0E5]/60 via-[#FFFDF8] to-[#F2DFDE]/25 pointer-events-none" />
+
+      {/* Decorative Outer Hairline Framing */}
+      <div className="absolute inset-3 sm:inset-6 md:inset-10 border border-[#C6AA78]/30 rounded-2xl sm:rounded-3xl pointer-events-none" />
+      <div className="absolute inset-5 sm:inset-8 md:inset-12 border border-[#89927A]/20 rounded-xl sm:rounded-2xl pointer-events-none hidden sm:block" />
 
       {/* Header Eyebrow */}
-      <div className="relative z-10 text-center mb-3 sm:mb-5 md:mb-6">
-        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#B79A66]/10 border border-[#B79A66]/30 text-[#E8D8BD] text-[10px] sm:text-xs md:text-sm font-sans-ar tracking-widest uppercase mb-1.5 sm:mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#B79A66] animate-pulse" />
+      <div className="relative z-10 text-center mb-3 sm:mb-5">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F7F0E5] border border-[#C6AA78]/40 text-[#48423C] text-[10px] sm:text-xs md:text-sm font-sans-ar tracking-widest uppercase mb-1.5 shadow-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C6AA78] animate-pulse" />
           {weddingConfig.messages.invitationGreeting}
         </div>
-        <h1 className="font-serif-ar text-2xl sm:text-3xl md:text-4xl text-[#E8D8BD] font-normal tracking-wide">
+        <h1 className="font-serif-ar text-2xl sm:text-3xl md:text-4xl text-[#48423C] font-normal tracking-wide">
           دعوة لحضور حفل الزفاف
         </h1>
-        <p className="font-serif-en italic text-xs sm:text-sm md:text-base text-[#B79A66] tracking-widest mt-0.5">
-          The Wedding Celebration
+        <p className="font-serif-en italic text-xs sm:text-sm md:text-base text-[#9C8150] tracking-widest mt-0.5">
+          The Royal Wedding Celebration
         </p>
       </div>
 
-      {/* The 3D Envelope Presentation with fluid sizing */}
-      <div
-        ref={envelopeRef}
-        className="envelope-container relative w-full max-w-[275px] xs:max-w-[310px] sm:max-w-[360px] md:max-w-[420px] h-[270px] xs:h-[290px] sm:h-[330px] md:h-[370px] flex items-center justify-center my-2 sm:my-3"
-      >
-        {/* The Emerging Invitation Letter */}
+      {/* Central Interactive Gatefold Envelope & Floral Arch Presentation */}
+      <div className="relative w-full max-w-[320px] xs:max-w-[350px] sm:max-w-[440px] md:max-w-[500px] h-[360px] xs:h-[390px] sm:h-[430px] md:h-[470px] flex items-center justify-center my-2 select-none">
+        {/* Background Signature Botanical Wreath ("Couronne Florale") */}
+        <div className="absolute inset-[-12%] flex items-center justify-center pointer-events-none z-0">
+          <CouronneFlorale className="w-full h-full max-w-[560px] max-h-[560px] opacity-85" />
+        </div>
+
+        {/* The Revealed Inner Wedding Invitation Card */}
         <div
-          ref={letterRef}
-          className="absolute w-[92%] h-[92%] top-[4%] bg-[#FCFAF6] text-[#292722] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 flex flex-col items-center justify-between shadow-2xl border border-[#B79A66]/40 transition-shadow duration-300 z-5"
-          style={{ willChange: 'transform' }}
+          ref={innerCardRef}
+          className="stationery-card-outer relative z-5 w-[92%] h-[92%] flex flex-col items-center justify-between p-4 sm:p-7 md:p-8 text-center bg-[#FCFAF6] shadow-xl"
+          style={{ willChange: 'transform, opacity' }}
         >
-          {/* Inner Letter Border */}
-          <div className="absolute inset-2 sm:inset-2.5 border border-[#B79A66]/30 rounded-lg sm:rounded-xl pointer-events-none" />
+          <div className="stationery-card-inner w-full h-full p-4 sm:p-6 flex flex-col items-center justify-between relative overflow-hidden">
+            {/* Floral Corners */}
+            <FloralCorner position="top-left" className="absolute top-2 left-2 w-7 h-7 sm:w-9 sm:h-9" />
+            <FloralCorner position="top-right" className="absolute top-2 right-2 w-7 h-7 sm:w-9 sm:h-9" />
+            <FloralCorner position="bottom-left" className="absolute bottom-2 left-2 w-7 h-7 sm:w-9 sm:h-9" />
+            <FloralCorner position="bottom-right" className="absolute bottom-2 right-2 w-7 h-7 sm:w-9 sm:h-9" />
 
-          {/* Letter Monogram Header */}
-          <div className="text-center pt-1">
-            <span className="font-serif-en text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-[#B79A66] block">
-              TOGETHER WITH OUR FAMILIES
-            </span>
-            <div className="w-8 sm:w-10 h-[1px] bg-[#B79A66]/40 mx-auto my-1" />
-          </div>
-
-          {/* Couple's Names in Letter */}
-          <div className="text-center my-auto py-1">
-            <h2 className="font-serif-ar text-xl xs:text-2xl sm:text-3xl md:text-4xl text-[#292722] font-bold leading-tight">
-              {weddingConfig.couple.groom.name}
-              <span className="text-[#B79A66] font-light mx-1.5 sm:mx-2.5 text-lg sm:text-2xl font-serif-en">
-                &amp;
+            {/* Inner Header Monogram */}
+            <div className="pt-1">
+              <span className="font-serif-en text-[9px] sm:text-[11px] tracking-[0.25em] uppercase text-[#9C8150] block">
+                TOGETHER WITH OUR FAMILIES
               </span>
-              {weddingConfig.couple.bride.name}
-            </h2>
-            <p className="font-serif-en italic text-[11px] sm:text-xs md:text-sm text-[#45483B] mt-1 tracking-wider">
-              {weddingConfig.event.dateArabicFormatted}
-            </p>
-          </div>
+              <div className="w-8 sm:w-12 h-[1px] bg-[#C6AA78]/50 mx-auto my-1" />
+            </div>
 
-          {/* Letter Bottom Accent */}
-          <div className="text-center pb-1 w-full">
-            <div className="w-10 sm:w-12 h-[1px] bg-[#B79A66]/40 mx-auto mb-1" />
-            <p className="font-sans-ar text-[9px] sm:text-[11px] text-[#45483B] font-medium truncate px-2">
-              {weddingConfig.venue.name}
-            </p>
-          </div>
-        </div>
-
-        {/* Envelope Body */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2E372C] to-[#20271E] rounded-2xl sm:rounded-3xl border border-[#B79A66]/30 shadow-2xl overflow-hidden z-2">
-          <div className="absolute bottom-0 left-0 right-0 h-[65%] bg-gradient-to-t from-[#252E23] to-[#2B3529] border-t border-[#B79A66]/20 clip-envelope-pocket shadow-inner" />
-          <div className="absolute top-2.5 left-2.5 text-[#B79A66]/20 font-serif-en text-xs">❦</div>
-          <div className="absolute top-2.5 right-2.5 text-[#B79A66]/20 font-serif-en text-xs">❦</div>
-        </div>
-
-        {/* Envelope Top Triangular Flap */}
-        <div
-          ref={flapRef}
-          className="envelope-flap absolute top-0 left-0 right-0 h-[52%] z-20 origin-top flex items-center justify-center"
-          style={{ willChange: 'transform' }}
-        >
-          <div className="w-full h-full bg-gradient-to-b from-[#343F32] via-[#2A3428] to-[#222B20] border-b-2 border-[#B79A66]/40 shadow-xl flex items-end justify-center pb-2 sm:pb-3 clip-envelope-flap">
-            {/* Wax Seal */}
-            <div
-              ref={waxSealRef}
-              onClick={handleManualOpen}
-              role="button"
-              tabIndex={0}
-              aria-label="ختم الشمع، انقر لفتح المظروف"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleManualOpen();
-                }
-              }}
-              className="wax-seal w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-full flex items-center justify-center cursor-pointer transform translate-y-4 sm:translate-y-6 select-none transition-transform hover:scale-105 active:scale-95"
-            >
-              <div className="w-9 h-9 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#D8BD8A]/40 flex flex-col items-center justify-center text-center">
-                <span className="font-serif-ar text-xs xs:text-sm sm:text-base md:text-lg font-bold text-[#F8F4EC] drop-shadow">
-                  {weddingConfig.couple.monogramArabic}
+            {/* Couple's Names in Majestic Calligraphy */}
+            <div className="my-auto py-2">
+              <p className="font-sans-ar text-[11px] sm:text-xs text-[#7A7269] mb-1">
+                يسرنا دعوتكم لمشاركتنا فرحة العمر
+              </p>
+              <h2 className="font-serif-ar text-2xl xs:text-3xl sm:text-4xl md:text-5xl text-[#48423C] font-bold leading-tight drop-shadow-sm">
+                {weddingConfig.couple.groom.name}
+                <span className="text-[#C6AA78] font-light mx-2 sm:mx-3 text-xl sm:text-3xl font-serif-en">
+                  &amp;
                 </span>
-                <span className="font-serif-en text-[7px] sm:text-[8px] uppercase tracking-widest text-[#E8D8BD]/80 mt-[-2px]">
-                  {weddingConfig.couple.monogramLatin}
-                </span>
+                {weddingConfig.couple.bride.name}
+              </h2>
+              <div className="mt-2">
+                <BotanicalDivider className="w-32 sm:w-44 mx-auto my-1.5" />
+                <p className="font-serif-en italic text-xs sm:text-sm text-[#48423C] tracking-wider">
+                  {weddingConfig.event.dateArabicFormatted}
+                </p>
               </div>
+            </div>
+
+            {/* Venue & Hall */}
+            <div className="pb-1 w-full">
+              <p className="font-sans-ar text-[10px] sm:text-xs text-[#89927A] font-medium truncate px-2">
+                {weddingConfig.venue.name} • {weddingConfig.venue.hall}
+              </p>
             </div>
           </div>
         </div>
+
+        {/* Gatefold Left Panel Door */}
+        <div
+          ref={gateLeftRef}
+          className="absolute inset-y-0 left-0 w-1/2 z-10 origin-left bg-[#F7F0E5] border-r border-[#C6AA78]/40 shadow-xl overflow-hidden rounded-s-2xl sm:rounded-s-3xl"
+          style={{ willChange: 'transform' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FFFDF8]/90 via-[#F7F0E5]/80 to-[#F2DFDE]/40" />
+          <div className="absolute inset-2 border border-[#C6AA78]/25 rounded-s-xl pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#C6AA78]/15 to-transparent pointer-events-none" />
+          {/* Subtle floral watermark */}
+          <div className="absolute bottom-4 left-4 text-[#C6AA78]/25 font-serif-en text-xl">❦</div>
+        </div>
+
+        {/* Gatefold Right Panel Door */}
+        <div
+          ref={gateRightRef}
+          className="absolute inset-y-0 right-0 w-1/2 z-10 origin-right bg-[#F7F0E5] border-l border-[#C6AA78]/40 shadow-xl overflow-hidden rounded-e-2xl sm:rounded-e-3xl"
+          style={{ willChange: 'transform' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-l from-[#FFFDF8]/90 via-[#F7F0E5]/80 to-[#F2DFDE]/40" />
+          <div className="absolute inset-2 border border-[#C6AA78]/25 rounded-e-xl pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#C6AA78]/15 to-transparent pointer-events-none" />
+          {/* Subtle floral watermark */}
+          <div className="absolute bottom-4 right-4 text-[#C6AA78]/25 font-serif-en text-xl">❦</div>
+        </div>
+
+        {/* Centerpiece: Floral Wax Seal Button */}
+        <button
+          ref={sealRef}
+          type="button"
+          onClick={handleManualOpen}
+          aria-label="ختم الشمع الزهري الملكي، انقر لفتح الدعوة"
+          className="wax-seal-gold absolute z-20 w-16 h-16 xs:w-18 xs:h-18 sm:w-22 sm:h-22 rounded-full flex flex-col items-center justify-center cursor-pointer select-none transition-transform hover:scale-105 active:scale-95 shadow-2xl group"
+          style={{ willChange: 'transform, opacity' }}
+        >
+          {/* Inner concentric ring */}
+          <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-18 sm:h-18 rounded-full border border-white/60 flex flex-col items-center justify-center text-center bg-gradient-to-b from-white/30 to-transparent">
+            <span className="font-serif-ar text-base xs:text-lg sm:text-2xl font-bold text-[#48423C] drop-shadow-sm group-hover:scale-105 transition-transform">
+              {weddingConfig.couple.monogramArabic}
+            </span>
+            <span className="font-serif-en text-[7px] sm:text-[9px] uppercase tracking-widest text-[#48423C]/80 mt-[-2px]">
+              {weddingConfig.couple.monogramLatin}
+            </span>
+          </div>
+        </button>
       </div>
 
       {/* Accessible CTA Button & Scroll Prompt */}
-      <div ref={promptRef} className="relative z-10 text-center mt-4 sm:mt-6 md:mt-8 flex flex-col items-center gap-2 sm:gap-3">
+      <div ref={promptRef} className="relative z-10 text-center mt-3 sm:mt-5 flex flex-col items-center gap-2">
         <button
           type="button"
           onClick={handleManualOpen}
-          className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#B79A66] hover:bg-[#D8BD8A] text-[#1E251E] font-medium font-sans-ar text-xs sm:text-sm md:text-base shadow-lg hover:shadow-[#B79A66]/20 transition-all duration-300 active:scale-95 cursor-pointer"
+          className="group relative inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#C6AA78] hover:bg-[#DFC89E] text-[#48423C] font-semibold font-sans-ar text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300 active:scale-95 cursor-pointer"
         >
-          <span>{isOpen ? 'الانتقال لتفاصيل الحفل' : 'افتح الدعوة'}</span>
-          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#1E251E]/10 flex items-center justify-center group-hover:rotate-12 transition-transform">
-            <MailOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#1E251E]" />
+          <span>{isOpen ? 'متابعة تفاصيل الحفل' : 'اضغطوا لفتح الدعوة'}</span>
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FFFDF8]/40 flex items-center justify-center group-hover:rotate-12 transition-transform">
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#48423C]" />
           </div>
         </button>
 
-        <div className="flex flex-col items-center gap-0.5 text-[#E8D8BD]/70 text-[10px] sm:text-xs font-sans-ar animate-bounce mt-1">
-          <span>مرّر لأسفل لمتابعة تفاصيل الحفل</span>
-          <ChevronDown className="w-3.5 h-3.5 text-[#B79A66]" />
+        <div className="flex flex-col items-center gap-0.5 text-[#7A7269] text-[10px] sm:text-xs font-sans-ar animate-bounce mt-1">
+          <span>مرّروا لأسفل لمتابعة تفاصيل الحفل</span>
+          <ChevronDown className="w-3.5 h-3.5 text-[#C6AA78]" />
         </div>
       </div>
     </section>
