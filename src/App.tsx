@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { InvitationCover } from './components/InvitationCover';
 import { CoupleReveal } from './components/CoupleReveal';
 import { QuranicVerse } from './components/QuranicVerse';
-// import { CinematicGallery } from './components/CinematicGallery';
+import { CinematicGallery } from './components/CinematicGallery';
 import { WeddingDate } from './components/WeddingDate';
 import { PersonalMessage } from './components/PersonalMessage';
 import { WeddingDetails } from './components/WeddingDetails';
@@ -47,7 +47,7 @@ export function App() {
         <QuranicVerse />
 
         {/* Scene 4: Cinematic Atmosphere & Architecture */}
-        {/* <CinematicGallery /> */}
+        <CinematicGallery />
 
         {/* Scene 5: The Wedding Date, Countdown & Add to Calendar */}
         <WeddingDate />

@@ -100,8 +100,8 @@ export const CinematicGallery: FC = () => {
           {!failedImages['hero-gallery'] ? (
             <img
               src={weddingConfig.photos.hero}
-              alt="قوس الزهور البيضاء وأجواء قصر البارون"
-              className="absolute inset-0 w-full h-full object-cover object-center scale-102 transition-transform duration-700 ease-out hover:scale-105"
+              alt="العروسان عمر وياسمين معاً تحت قوس الزهور الملكي"
+              className="absolute inset-0 w-full h-full object-cover object-[center_20%] scale-102 transition-transform duration-700 ease-out hover:scale-105"
               loading="lazy"
               onError={() => handleImageError('hero-gallery')}
             />
@@ -121,7 +121,7 @@ export const CinematicGallery: FC = () => {
           {/* Editorial Caption on Image */}
           <div ref={quoteRef} className="relative z-10 max-w-xl text-right text-white">
             <span className="font-serif-en text-[10px] sm:text-xs tracking-[0.25em] uppercase text-[#DFC89E] block mb-1.5 font-medium">
-              ROYAL BOTANICAL ATMOSPHERE
+              OMAR &amp; YASMIN • لحظات العمر
             </span>
             <p className="font-serif-ar text-xl sm:text-2xl md:text-3xl leading-snug font-normal drop-shadow">
               "وفي رحاب الأصالة والزهور البيضاء، تكتمل فرحتنا بوجودكم معنا"

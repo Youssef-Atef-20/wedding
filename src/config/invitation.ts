@@ -1,3 +1,10 @@
+import groomImg from '../assets/Groom.webp';
+import brideImg from '../assets/Bride.webp';
+import togetherImg from '../assets/Together.webp';
+import coupleGardenImg from '../assets/CoupleGarden.webp';
+import ringsMomentImg from '../assets/RingsMoment.webp';
+import coupleTerraceImg from '../assets/CoupleTerrace.webp';
+
 export interface WeddingTimelineEvent {
   time: string;
   title: string;
@@ -122,36 +129,36 @@ export const weddingConfig: WeddingConfig = {
   },
   photos: {
     // Strictly verified modest, elegant Islamic floral imagery: White roses, botanical arches, wedding rings on silk, palace architecture
-    hero: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=85', // Majestic botanical white rose arch
-    groomMotif: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85', // White rose & eucalyptus formal boutonniere
-    brideMotif: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85', // Delicate white roses bouquet with pearls
+    hero: togetherImg, // Main hero: Omar & Yasmin together under the botanical arch
+    groomMotif: groomImg, // Groom photo from assets
+    brideMotif: brideImg, // Bride photo from assets
     gallery: [
       {
         id: 'photo-1',
-        url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=85',
-        alt: 'خاتما الزفاف الذهبيان وسط بتلات الورد الأبيض',
-        caption: 'رمز المودة والعهد الأبدي',
+        url: coupleGardenImg,
+        alt: 'العروسان في حدائق القصر الملكية بين أزهار الورد الأبيض',
+        caption: 'خطوات تملؤها المودة والأمل',
         orientation: 'landscape',
       },
       {
         id: 'photo-2',
-        url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=85',
-        alt: 'قوس الزهور الطبيعية البيضاء وأوراق الأوكالبتوس',
-        caption: 'أكاليل الورد تحتفي بفرحتنا',
+        url: ringsMomentImg,
+        alt: 'تبادل خاتمي الزفاف الذهبيين وباقة الورد الأبيض',
+        caption: 'رمز المحبة والعهد الأبدي',
         orientation: 'landscape',
       },
       {
         id: 'photo-3',
-        url: 'https://images.unsplash.com/photo-1545232979-fbf68fe9b10d?auto=format&fit=crop&w=1400&q=85',
-        alt: 'العمارة الملكية التاريخية لقصر البارون',
-        caption: 'أجواء أسطورية في قلب القاهرة',
+        url: coupleTerraceImg,
+        alt: 'العروسان على شرفة القصر وقت الغروب الذهبي',
+        caption: 'لحظات السعادة تحت سماء القاهرة',
         orientation: 'landscape',
       },
       {
         id: 'photo-4',
-        url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1400&q=85',
-        alt: 'مائدة الاحتفال المزينة بالورود والشموع الدافئة',
-        caption: 'ليلة مباركة تجمع القلوب بالمحبة',
+        url: togetherImg,
+        alt: 'العروسان معاً تحت قوس الزهور الطبيعية البيضاء',
+        caption: 'بداية رحلة العمر المشتركة',
         orientation: 'portrait',
       },
     ],
