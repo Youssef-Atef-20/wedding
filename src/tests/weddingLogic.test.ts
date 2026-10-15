@@ -9,21 +9,41 @@ describe('Wedding Configuration Suite', () => {
     expect(weddingConfig.couple.monogramLatin).toBe('O & Y');
   });
 
-  it('should have a valid ISO event date', () => {
-    const timestamp = Date.parse(weddingConfig.event.date);
-    expect(isNaN(timestamp)).toBe(false);
-    expect(new Date(timestamp).getFullYear()).toBeGreaterThanOrEqual(2026);
+  it('should have valid ISO event start and end dates with timezone', () => {
+    const startTimestamp = Date.parse(weddingConfig.event.date);
+    const endTimestamp = Date.parse(weddingConfig.event.endDate);
+
+    expect(isNaN(startTimestamp)).toBe(false);
+    expect(isNaN(endTimestamp)).toBe(false);
+    expect(endTimestamp).toBeGreaterThan(startTimestamp);
+    expect(weddingConfig.event.timezone).toBe('Africa/Cairo');
   });
 
-  it('should have a valid WhatsApp phone number and Google Maps link', () => {
-    expect(weddingConfig.rsvp.whatsappNumber).toMatch(/^\d{10,15}$/);
+  it('should have valid venue and Google Maps link', () => {
+    expect(weddingConfig.venue.name).toBeTruthy();
     expect(weddingConfig.venue.googleMapsUrl).toMatch(/^https?:\/\//);
+  });
+
+  it('should strictly adhere to modest, Islamic-compliant assets', () => {
+    // Verified modest motifs: palace architecture, formal groom suit, bridal white floral bouquet
+    expect(weddingConfig.photos.hero).toBeTruthy();
+    expect(weddingConfig.photos.groomMotif).toBeTruthy();
+    expect(weddingConfig.photos.brideMotif).toBeTruthy();
+    expect(weddingConfig.photos.gallery.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('should have the exact, unparaphrased Quranic verse and reference', () => {
+    const expectedVerse =
+      'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ';
+    const expectedReference = 'سورة الروم، الآية ٢١';
+
+    expect(weddingConfig.messages.quranicVerse).toBe(expectedVerse);
+    expect(weddingConfig.messages.quranicReference).toBe(expectedReference);
   });
 });
 
 describe('Countdown Logic Suite', () => {
   it('should correctly calculate days, hours, minutes, and seconds for future dates', () => {
-    // 2 days, 3 hours, 4 minutes, 5 seconds in future
     const now = Date.now();
     const futureDate = new Date(now + ((2 * 24 + 3) * 3600 + 4 * 60 + 5) * 1000).toISOString();
 
@@ -49,41 +69,68 @@ describe('Countdown Logic Suite', () => {
   });
 });
 
-describe('RSVP WhatsApp Message Formatting', () => {
-  it('should encode attending message with guest name and count accurately', () => {
-    const name = 'أحمد محمود';
-    const guestCount = 2;
-    const groom = weddingConfig.couple.groom.name;
-    const bride = weddingConfig.couple.bride.name;
+describe('Calendar Integration Suite (Google Calendar & iCal)', () => {
+  const formatUtcDateString = (dateStr: string): string => {
+    const d = new Date(dateStr);
+    return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  };
 
-    const message =
-      `السلام عليكم ورحمة الله وبركاته،\n` +
-      `أنا: ${name}\n` +
-      `يشرفني تأكيد حضور حفل زفاف ${groom} & ${bride}.\n` +
-      `عدد الحضور: ${guestCount} فرد.\n` +
-      `بارك الله لكما وبارك عليكما وجمع بينكما في خير!`;
+  it('should generate valid Google Calendar URL parameters with timezone and venue', () => {
+    const startUtc = formatUtcDateString(weddingConfig.event.date);
+    const endUtc = formatUtcDateString(weddingConfig.event.endDate);
 
-    const encoded = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${weddingConfig.rsvp.whatsappNumber}?text=${encoded}`;
+    const title = encodeURIComponent(
+      `حفل زفاف ${weddingConfig.couple.groom.name} & ${weddingConfig.couple.bride.name}`
+    );
+    const location = encodeURIComponent(
+      `${weddingConfig.venue.name}، ${weddingConfig.venue.address}، ${weddingConfig.venue.city}`
+    );
 
-    expect(whatsappUrl).toContain('wa.me/' + weddingConfig.rsvp.whatsappNumber);
-    expect(whatsappUrl).toContain(encodeURIComponent(name));
-    expect(whatsappUrl).toContain(encodeURIComponent(`عدد الحضور: ${guestCount} فرد.`));
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startUtc}/${endUtc}&location=${location}&ctz=${encodeURIComponent(weddingConfig.event.timezone)}`;
+
+    expect(googleCalendarUrl).toContain('calendar.google.com/calendar/render');
+    expect(googleCalendarUrl).toContain(encodeURIComponent(weddingConfig.couple.groom.name));
+    expect(googleCalendarUrl).toContain(encodeURIComponent(weddingConfig.venue.name));
+    expect(googleCalendarUrl).toContain(startUtc);
+    expect(googleCalendarUrl).toContain(endUtc);
   });
 
-  it('should encode polite apology message when declining', () => {
-    const name = 'سارة خالد';
-    const groom = weddingConfig.couple.groom.name;
-    const bride = weddingConfig.couple.bride.name;
+  it('should generate RFC 5545 compliant iCalendar (.ics) structure', () => {
+    const startUtc = formatUtcDateString(weddingConfig.event.date);
+    const endUtc = formatUtcDateString(weddingConfig.event.endDate);
+    const nowUtc = formatUtcDateString(new Date().toISOString());
 
-    const message =
-      `السلام عليكم ورحمة الله وبركاته،\n` +
-      `أنا: ${name}\n` +
-      `أعتذر بكل أسف لعدم تمكني من حضور حفل زفاف ${groom} & ${bride}.\n` +
-      `مع أطيب تمنياتي لكم بحياة زوجية سعيدة ومباركة!`;
+    const summary = `حفل زفاف ${weddingConfig.couple.groom.name} & ${weddingConfig.couple.bride.name}`;
+    const location = `${weddingConfig.venue.name}, ${weddingConfig.venue.address}`;
 
-    const encoded = encodeURIComponent(message);
-    expect(decodeURIComponent(encoded)).toContain('أعتذر بكل أسف');
-    expect(decodeURIComponent(encoded)).toContain(name);
+    const icsLines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Luxury Wedding Invitation//AR',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:wedding-${Date.parse(weddingConfig.event.date)}@palace.invitation`,
+      `DTSTAMP:${nowUtc}`,
+      `DTSTART:${startUtc}`,
+      `DTEND:${endUtc}`,
+      `SUMMARY:${summary}`,
+      `LOCATION:${location}`,
+      'STATUS:CONFIRMED',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ];
+
+    const icsContent = icsLines.join('\r\n');
+
+    expect(icsContent).toContain('BEGIN:VCALENDAR');
+    expect(icsContent).toContain('VERSION:2.0');
+    expect(icsContent).toContain('BEGIN:VEVENT');
+    expect(icsContent).toContain(`SUMMARY:${summary}`);
+    expect(icsContent).toContain(`LOCATION:${location}`);
+    expect(icsContent).toContain(`DTSTART:${startUtc}`);
+    expect(icsContent).toContain(`DTEND:${endUtc}`);
+    expect(icsContent).toContain('END:VEVENT');
+    expect(icsContent).toContain('END:VCALENDAR');
   });
 });

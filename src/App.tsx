@@ -1,89 +1,62 @@
 import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
 
 import { InvitationCover } from './components/InvitationCover';
 import { CoupleReveal } from './components/CoupleReveal';
+import { QuranicVerse } from './components/QuranicVerse';
 import { CinematicGallery } from './components/CinematicGallery';
 import { WeddingDate } from './components/WeddingDate';
 import { PersonalMessage } from './components/PersonalMessage';
 import { WeddingDetails } from './components/WeddingDetails';
-import { RSVPSection } from './components/RSVPSection';
 import { ClosingScene } from './components/ClosingScene';
-import { AudioToggle } from './components/AudioToggle';
 import { FloatingNav } from './components/FloatingNav';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function App() {
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    // Synchronize Lenis scroll with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
-
-    // Refresh ScrollTrigger when components and assets mount
+    // Native browser scrolling - zero latency, zero wheel interception
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 400);
+    }, 200);
 
     return () => {
       clearTimeout(timer);
-      gsap.ticker.remove(updateTicker);
-      lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#1E251E] text-[#F8F4EC] selection:bg-[#B79A66] selection:text-[#1E251E]">
-      {/* Background Film Grain Noise Overlay */}
+    <div className="relative min-h-screen bg-[#1E251E] text-[#F8F4EC] selection:bg-[#B79A66] selection:text-[#1E251E] overflow-x-hidden">
+      {/* Background Film Grain Noise Texture (Zero repaint cost, non-scrolling) */}
       <div className="noise-overlay" aria-hidden="true" />
 
-      {/* Floating Audio Soundtrack Controller */}
-      <AudioToggle />
-
-      {/* Floating Section Navigation Pill */}
+      {/* Floating Section Navigation Pill (Responsive & auto-hiding) */}
       <FloatingNav />
 
-      {/* Main Narrative Scenes Flow */}
-      <main className="w-full relative">
+      {/* Main Narrative Scenes Flow with Native Responsive Scrolling */}
+      <main className="w-full relative pb-16 sm:pb-20">
         {/* Scene 1: Invitation Cover & 3D Unfolding Envelope */}
         <InvitationCover />
 
-        {/* Scene 2: Reveal The Couple */}
+        {/* Scene 2: Reveal The Couple (Modest, Regal & Proportioned) */}
         <CoupleReveal />
 
-        {/* Scene 3: Cinematic Photography Sequence */}
+        {/* Scene 3: Dedicated Sacred Quranic Verse Section */}
+        <QuranicVerse />
+
+        {/* Scene 4: Cinematic Atmosphere & Architecture */}
         <CinematicGallery />
 
-        {/* Scene 4: The Wedding Date & Live Countdown */}
+        {/* Scene 5: The Wedding Date, Countdown & Add to Calendar */}
         <WeddingDate />
 
-        {/* Scene 5: A Personal Message & Quranic Blessing */}
+        {/* Scene 6: A Personal Family Invitation Letter */}
         <PersonalMessage />
 
-        {/* Scene 6: Wedding Details, Timetable & Google Maps */}
+        {/* Scene 7: Wedding Details, Timetable & Google Maps */}
         <WeddingDetails />
-
-        {/* Scene 7: RSVP Form to WhatsApp */}
-        <RSVPSection />
 
         {/* Scene 8: The Final Moment & Navigation */}
         <ClosingScene />

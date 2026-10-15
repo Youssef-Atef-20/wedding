@@ -19,15 +19,14 @@ export const PersonalMessage: FC = () => {
       gsap.from(cardRef.current, {
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top 75%',
-          end: 'bottom 80%',
+          start: 'top 80%',
           toggleActions: 'play none none reverse',
         },
-        scale: 0.95,
+        scale: 0.97,
         opacity: 0,
-        y: 40,
-        duration: 1.2,
-        ease: 'power3.out',
+        y: 25,
+        duration: 0.6,
+        ease: 'power2.out',
       });
     },
     { scope: containerRef }
@@ -38,55 +37,50 @@ export const PersonalMessage: FC = () => {
       ref={containerRef}
       id="personal-message"
       aria-label="رسالة الدعوة والترحيب"
-      className="relative min-h-[90dvh] w-full py-28 sm:py-36 md:py-44 px-4 md:px-8 flex flex-col items-center justify-center bg-[#141914] overflow-hidden"
+      className="relative w-full py-10 sm:py-14 md:py-20 px-4 sm:px-6 md:px-8 flex flex-col items-center justify-center bg-[#141914] overflow-hidden"
     >
       {/* Delicate background ornamental lines */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/20 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/20 to-transparent pointer-events-none" />
 
       {/* Main Double-Bezel Letter Container */}
       <div
         ref={cardRef}
-        className="bezel-card-outer relative z-10 w-full max-w-3xl mx-auto shadow-2xl"
+        className="bezel-card-outer relative z-10 w-full max-w-2xl mx-auto shadow-2xl"
       >
-        <div className="bezel-card-inner p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
+        <div className="bezel-card-inner p-5 sm:p-8 md:p-10 text-center relative overflow-hidden">
           {/* Top Decorative Filigree */}
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="w-12 h-[1px] bg-[#B79A66]/40" />
-            <HeartHandshake className="w-5 h-5 text-[#B79A66]" />
-            <div className="w-12 h-[1px] bg-[#B79A66]/40" />
+          <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
+            <div className="w-8 sm:w-12 h-[1px] bg-[#B79A66]/40" />
+            <HeartHandshake className="w-4 h-4 sm:w-5 sm:h-5 text-[#B79A66]" />
+            <div className="w-8 sm:w-12 h-[1px] bg-[#B79A66]/40" />
           </div>
 
-          {/* Quranic Verse */}
-          <div className="mb-10 px-2 sm:px-6">
-            <span className="font-serif-ar text-xs sm:text-sm text-[#B79A66] block mb-3">
-              ﷽
-            </span>
-            <blockquote className="font-serif-ar text-2xl sm:text-3xl md:text-3xl text-[#E8D8BD] leading-loose font-normal">
-              "{weddingConfig.messages.quranicVerse}"
-            </blockquote>
-            <cite className="block font-sans-ar text-xs text-[#B79A66]/80 mt-3 not-italic">
-              {weddingConfig.messages.quranicReference}
-            </cite>
-          </div>
+          {/* Section Heading & Greeting */}
+          <span className="font-serif-ar text-xs sm:text-sm text-[#B79A66] block mb-1">
+            {weddingConfig.messages.invitationGreeting}
+          </span>
+          <h3 className="font-serif-ar text-xl sm:text-2xl md:text-3xl text-[#E8D8BD] font-normal mb-3 sm:mb-4">
+            دعوة الأهل والأحباب
+          </h3>
 
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/50 to-transparent mx-auto my-8" />
+          <div className="w-16 sm:w-20 h-[1px] bg-gradient-to-r from-transparent via-[#B79A66]/50 to-transparent mx-auto my-3 sm:my-4" />
 
           {/* Intimate Letter Body */}
-          <p className="font-serif-ar text-lg sm:text-xl md:text-2xl text-[#F8F4EC]/90 leading-relaxed max-w-xl mx-auto font-normal">
+          <p className="font-serif-ar text-base sm:text-lg md:text-xl text-[#F8F4EC]/90 leading-relaxed max-w-xl mx-auto font-normal px-2">
             {weddingConfig.messages.invitationBody}
           </p>
 
           {/* Families Signature */}
-          <div className="mt-10 pt-6 border-t border-[#B79A66]/20 flex flex-col sm:flex-row items-center justify-around gap-4 text-[#E8D8BD]">
+          <div className="mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-[#B79A66]/20 flex flex-col sm:flex-row items-center justify-around gap-3 sm:gap-4 text-[#E8D8BD]">
             <div>
-              <span className="font-sans-ar text-xs text-[#B79A66] block mb-1">عائلة العريس</span>
-              <span className="font-serif-ar text-lg sm:text-xl">{weddingConfig.couple.groom.father}</span>
+              <span className="font-sans-ar text-[10px] sm:text-xs text-[#B79A66] block mb-0.5">عائلة العريس</span>
+              <span className="font-serif-ar text-base sm:text-lg md:text-xl">{weddingConfig.couple.groom.father}</span>
             </div>
             <div className="w-8 h-[1px] sm:w-[1px] sm:h-8 bg-[#B79A66]/30" />
             <div>
-              <span className="font-sans-ar text-xs text-[#B79A66] block mb-1">عائلة العروس</span>
-              <span className="font-serif-ar text-lg sm:text-xl">{weddingConfig.couple.bride.father}</span>
+              <span className="font-sans-ar text-[10px] sm:text-xs text-[#B79A66] block mb-0.5">عائلة العروس</span>
+              <span className="font-serif-ar text-base sm:text-lg md:text-xl">{weddingConfig.couple.bride.father}</span>
             </div>
           </div>
         </div>
